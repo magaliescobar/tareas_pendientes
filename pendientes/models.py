@@ -16,10 +16,20 @@ class Autores(models.Model):
 	def __unicode__(self):
 		return "%s" %(self.nombre)
 
-	class Meta():
+	class Meta:
 		verbose_name_plural="Autores"
 
 
+class Actualizaciones(models.Model):
+	autor = models.ForeignKey(Autores)
+	descripcion = models.CharField(max_length = 80)
+	actualizaciones = models.ManyToManyField(Actualizaciones)
+
+	def __unicode__(self):
+		return "%s - %s" %(self.autor, self.descripcion)
+
+	class Meta:
+		verbose_name_plural = "Actualizaciones"
 
 class Tareas(models.Model):
 	titulo = models.CharField(max_length=30)
@@ -27,15 +37,11 @@ class Tareas(models.Model):
 	alcance = models.CharField(max_length=30)
 	autor = models.ForeignKey(Autores)
 	estado = models.CharField(max_length=11, choices=estado_tareas)
+	
 
 	def __unicode__(self):
 		return "%s - %s - %s - %s" %(self.titulo, self.fecha_creacion,self.alcance,self.autor)
 
-	class Meta():
+	class Meta:
 		verbose_name_plural = "Tareas"
-
-
-
-
-
 
